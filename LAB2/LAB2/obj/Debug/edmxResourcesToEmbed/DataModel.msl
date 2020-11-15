@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище BD_waterfallsModelContainer" CdmEntityContainer="BD_waterfallsEntities">
+    <EntitySetMapping Name="Animals">
+      <EntityTypeMapping TypeName="BD_waterfallsModel.Animals">
+        <MappingFragment StoreEntitySet="Animals">
+          <ScalarProperty Name="AN_ID" ColumnName="AN_ID" />
+          <ScalarProperty Name="AN_NAME" ColumnName="AN_NAME" />
+          <ScalarProperty Name="AN_PHOTO" ColumnName="AN_PHOTO" />
+          <ScalarProperty Name="AN_HEIGHT" ColumnName="AN_HEIGHT" />
+          <ScalarProperty Name="AN_WEIGHT" ColumnName="AN_WEIGHT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="BD_waterfallsModel.Countries">
+        <MappingFragment StoreEntitySet="Countries">
+          <ScalarProperty Name="CN_ID" ColumnName="CN_ID" />
+          <ScalarProperty Name="CN_NAME" ColumnName="CN_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rivers">
+      <EntityTypeMapping TypeName="BD_waterfallsModel.Rivers">
+        <MappingFragment StoreEntitySet="Rivers">
+          <ScalarProperty Name="RV_ID" ColumnName="RV_ID" />
+          <ScalarProperty Name="RV_NAME" ColumnName="RV_NAME" />
+          <ScalarProperty Name="RV_COUNTRY_ID" ColumnName="RV_COUNTRY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Types">
+      <EntityTypeMapping TypeName="BD_waterfallsModel.Types">
+        <MappingFragment StoreEntitySet="Types">
+          <ScalarProperty Name="TP_ID" ColumnName="TP_ID" />
+          <ScalarProperty Name="TP_NAME" ColumnName="TP_NAME" />
+          <ScalarProperty Name="TP_DESCRIPTION" ColumnName="TP_DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visits">
+      <EntityTypeMapping TypeName="BD_waterfallsModel.Visits">
+        <MappingFragment StoreEntitySet="Visits">
+          <ScalarProperty Name="VS_ID" ColumnName="VS_ID" />
+          <ScalarProperty Name="VS_ID_ANIMALS" ColumnName="VS_ID_ANIMALS" />
+          <ScalarProperty Name="VS_ID_WATERFALLS" ColumnName="VS_ID_WATERFALLS" />
+          <ScalarProperty Name="VS_DATE" ColumnName="VS_DATE" />
+          <ScalarProperty Name="VS_DESCRIPTION" ColumnName="VS_DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Waterfalls">
+      <EntityTypeMapping TypeName="BD_waterfallsModel.Waterfalls">
+        <MappingFragment StoreEntitySet="Waterfalls">
+          <ScalarProperty Name="WF_ID" ColumnName="WF_ID" />
+          <ScalarProperty Name="WF_NAME" ColumnName="WF_NAME" />
+          <ScalarProperty Name="WF_HEIGHT" ColumnName="WF_HEIGHT" />
+          <ScalarProperty Name="WF__PHOTO" ColumnName="WF__PHOTO" />
+          <ScalarProperty Name="WF_RIVER_ID" ColumnName="WF_RIVER_ID" />
+          <ScalarProperty Name="WF_TYPE_ID" ColumnName="WF_TYPE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

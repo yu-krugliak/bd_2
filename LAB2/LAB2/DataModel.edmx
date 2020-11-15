@@ -1,0 +1,428 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище BD_waterfallsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="AN_ID" />
+          </Key>
+          <Property Name="AN_ID" Type="int" Nullable="false" />
+          <Property Name="AN_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AN_PHOTO" Type="image" />
+          <Property Name="AN_HEIGHT" Type="float" />
+          <Property Name="AN_WEIGHT" Type="float" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CN_ID" />
+          </Key>
+          <Property Name="CN_ID" Type="int" Nullable="false" />
+          <Property Name="CN_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rivers">
+          <Key>
+            <PropertyRef Name="RV_ID" />
+          </Key>
+          <Property Name="RV_ID" Type="int" Nullable="false" />
+          <Property Name="RV_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RV_COUNTRY_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="TP_ID" />
+          </Key>
+          <Property Name="TP_ID" Type="int" Nullable="false" />
+          <Property Name="TP_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TP_DESCRIPTION" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Visits">
+          <Key>
+            <PropertyRef Name="VS_ID" />
+          </Key>
+          <Property Name="VS_ID" Type="int" Nullable="false" />
+          <Property Name="VS_ID_ANIMALS" Type="int" Nullable="false" />
+          <Property Name="VS_ID_WATERFALLS" Type="int" Nullable="false" />
+          <Property Name="VS_DATE" Type="datetime" />
+          <Property Name="VS_DESCRIPTION" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Waterfalls">
+          <Key>
+            <PropertyRef Name="WF_ID" />
+          </Key>
+          <Property Name="WF_ID" Type="int" Nullable="false" />
+          <Property Name="WF_NAME" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="WF_HEIGHT" Type="int" />
+          <Property Name="WF__PHOTO" Type="image" />
+          <Property Name="WF_RIVER_ID" Type="int" Nullable="false" />
+          <Property Name="WF_TYPE_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Rivers__RV_(COUN__276EDEB3">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Rivers" Type="Self.Rivers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CN_ID" />
+            </Principal>
+            <Dependent Role="Rivers">
+              <PropertyRef Name="RV_COUNTRY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Visits__VS_(ID_A__2A4B4B5E">
+          <End Role="Animals" Type="Self.Animals" Multiplicity="1" />
+          <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animals">
+              <PropertyRef Name="AN_ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="VS_ID_ANIMALS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Visits__VS_(ID_A__48CFD27E">
+          <End Role="Animals" Type="Self.Animals" Multiplicity="1" />
+          <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animals">
+              <PropertyRef Name="AN_ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="VS_ID_ANIMALS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Visits__VS_(ID_W__2B3F6F97">
+          <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="1" />
+          <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Waterfalls">
+              <PropertyRef Name="WF_ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="VS_ID_WATERFALLS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Visits__VS_(ID_W__49C3F6B7">
+          <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="1" />
+          <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Waterfalls">
+              <PropertyRef Name="WF_ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="VS_ID_WATERFALLS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Waterfall__WF_(R__286302EC">
+          <End Role="Rivers" Type="Self.Rivers" Multiplicity="1" />
+          <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rivers">
+              <PropertyRef Name="RV_ID" />
+            </Principal>
+            <Dependent Role="Waterfalls">
+              <PropertyRef Name="WF_RIVER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Waterfall__WF_(T__29572725">
+          <End Role="Types" Type="Self.Types" Multiplicity="1" />
+          <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="TP_ID" />
+            </Principal>
+            <Dependent Role="Waterfalls">
+              <PropertyRef Name="WF_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище BD_waterfallsModelContainer">
+          <EntitySet Name="Animals" EntityType="Self.Animals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rivers" EntityType="Self.Rivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Types" EntityType="Self.Types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visits" EntityType="Self.Visits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Waterfalls" EntityType="Self.Waterfalls" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Rivers__RV_(COUN__276EDEB3" Association="Self.FK__Rivers__RV_(COUN__276EDEB3">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Rivers" EntitySet="Rivers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Visits__VS_(ID_A__2A4B4B5E" Association="Self.FK__Visits__VS_(ID_A__2A4B4B5E">
+            <End Role="Animals" EntitySet="Animals" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Visits__VS_(ID_A__48CFD27E" Association="Self.FK__Visits__VS_(ID_A__48CFD27E">
+            <End Role="Animals" EntitySet="Animals" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Visits__VS_(ID_W__2B3F6F97" Association="Self.FK__Visits__VS_(ID_W__2B3F6F97">
+            <End Role="Waterfalls" EntitySet="Waterfalls" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Visits__VS_(ID_W__49C3F6B7" Association="Self.FK__Visits__VS_(ID_W__49C3F6B7">
+            <End Role="Waterfalls" EntitySet="Waterfalls" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Waterfall__WF_(R__286302EC" Association="Self.FK__Waterfall__WF_(R__286302EC">
+            <End Role="Rivers" EntitySet="Rivers" />
+            <End Role="Waterfalls" EntitySet="Waterfalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Waterfall__WF_(T__29572725" Association="Self.FK__Waterfall__WF_(T__29572725">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="Waterfalls" EntitySet="Waterfalls" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BD_waterfallsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="AN_ID" />
+          </Key>
+          <Property Name="AN_ID" Type="Int32" Nullable="false" />
+          <Property Name="AN_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AN_PHOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="AN_HEIGHT" Type="Double" />
+          <Property Name="AN_WEIGHT" Type="Double" />
+          <NavigationProperty Name="Visits" Relationship="Self.FK__Visits__VS__ID_A__2A4B4B5E" FromRole="Animals" ToRole="Visits" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CN_ID" />
+          </Key>
+          <Property Name="CN_ID" Type="Int32" Nullable="false" />
+          <Property Name="CN_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Rivers" Relationship="Self.FK__Rivers__RV__COUN__276EDEB3" FromRole="Countries" ToRole="Rivers" />
+        </EntityType>
+        <EntityType Name="Rivers">
+          <Key>
+            <PropertyRef Name="RV_ID" />
+          </Key>
+          <Property Name="RV_ID" Type="Int32" Nullable="false" />
+          <Property Name="RV_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RV_COUNTRY_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Countries" Relationship="Self.FK__Rivers__RV__COUN__276EDEB3" FromRole="Rivers" ToRole="Countries" />
+          <NavigationProperty Name="Waterfalls" Relationship="Self.FK__Waterfall__WF__R__286302EC" FromRole="Rivers" ToRole="Waterfalls" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="TP_ID" />
+          </Key>
+          <Property Name="TP_ID" Type="Int32" Nullable="false" />
+          <Property Name="TP_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TP_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Waterfalls" Relationship="Self.FK__Waterfall__WF__T__29572725" FromRole="Types" ToRole="Waterfalls" />
+        </EntityType>
+        <EntityType Name="Visits">
+          <Key>
+            <PropertyRef Name="VS_ID" />
+          </Key>
+          <Property Name="VS_ID" Type="Int32" Nullable="false" />
+          <Property Name="VS_ID_ANIMALS" Type="Int32" Nullable="false" />
+          <Property Name="VS_ID_WATERFALLS" Type="Int32" Nullable="false" />
+          <Property Name="VS_DATE" Type="DateTime" Precision="3" />
+          <Property Name="VS_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Animals" Relationship="Self.FK__Visits__VS__ID_A__2A4B4B5E" FromRole="Visits" ToRole="Animals" />
+          <NavigationProperty Name="Waterfalls" Relationship="Self.FK__Visits__VS__ID_W__2B3F6F97" FromRole="Visits" ToRole="Waterfalls" />
+        </EntityType>
+        <EntityType Name="Waterfalls">
+          <Key>
+            <PropertyRef Name="WF_ID" />
+          </Key>
+          <Property Name="WF_ID" Type="Int32" Nullable="false" />
+          <Property Name="WF_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WF_HEIGHT" Type="Int32" />
+          <Property Name="WF__PHOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="WF_RIVER_ID" Type="Int32" Nullable="false" />
+          <Property Name="WF_TYPE_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rivers" Relationship="Self.FK__Waterfall__WF__R__286302EC" FromRole="Waterfalls" ToRole="Rivers" />
+          <NavigationProperty Name="Types" Relationship="Self.FK__Waterfall__WF__T__29572725" FromRole="Waterfalls" ToRole="Types" />
+          <NavigationProperty Name="Visits" Relationship="Self.FK__Visits__VS__ID_W__2B3F6F97" FromRole="Waterfalls" ToRole="Visits" />
+        </EntityType>
+        <Association Name="FK__Visits__VS__ID_A__2A4B4B5E">
+          <End Role="Animals" Type="Self.Animals" Multiplicity="1" />
+          <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animals">
+              <PropertyRef Name="AN_ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="VS_ID_ANIMALS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rivers__RV__COUN__276EDEB3">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Rivers" Type="Self.Rivers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CN_ID" />
+            </Principal>
+            <Dependent Role="Rivers">
+              <PropertyRef Name="RV_COUNTRY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Waterfall__WF__R__286302EC">
+          <End Role="Rivers" Type="Self.Rivers" Multiplicity="1" />
+          <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rivers">
+              <PropertyRef Name="RV_ID" />
+            </Principal>
+            <Dependent Role="Waterfalls">
+              <PropertyRef Name="WF_RIVER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Waterfall__WF__T__29572725">
+          <End Role="Types" Type="Self.Types" Multiplicity="1" />
+          <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="TP_ID" />
+            </Principal>
+            <Dependent Role="Waterfalls">
+              <PropertyRef Name="WF_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Visits__VS__ID_W__2B3F6F97">
+          <End Type="Self.Waterfalls" Multiplicity="1" Role="Waterfalls" />
+          <End Type="Self.Visits" Multiplicity="*" Role="Visits" />
+          <ReferentialConstraint>
+            <Principal Role="Waterfalls">
+              <PropertyRef Name="WF_ID" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="VS_ID_WATERFALLS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BD_waterfallsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Animals" EntityType="Self.Animals" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" />
+          <EntitySet Name="Rivers" EntityType="Self.Rivers" />
+          <EntitySet Name="Types" EntityType="Self.Types" />
+          <EntitySet Name="Visits" EntityType="Self.Visits" />
+          <EntitySet Name="Waterfalls" EntityType="Self.Waterfalls" />
+          <AssociationSet Name="FK__Visits__VS__ID_A__2A4B4B5E" Association="Self.FK__Visits__VS__ID_A__2A4B4B5E">
+            <End Role="Animals" EntitySet="Animals" />
+            <End Role="Visits" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rivers__RV__COUN__276EDEB3" Association="Self.FK__Rivers__RV__COUN__276EDEB3">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Rivers" EntitySet="Rivers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Waterfall__WF__R__286302EC" Association="Self.FK__Waterfall__WF__R__286302EC">
+            <End Role="Rivers" EntitySet="Rivers" />
+            <End Role="Waterfalls" EntitySet="Waterfalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Waterfall__WF__T__29572725" Association="Self.FK__Waterfall__WF__T__29572725">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="Waterfalls" EntitySet="Waterfalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Visits__VS__ID_W__2B3F6F97" Association="Self.FK__Visits__VS__ID_W__2B3F6F97">
+            <End EntitySet="Waterfalls" Role="Waterfalls" />
+            <End EntitySet="Visits" Role="Visits" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BD_waterfallsModelContainer" CdmEntityContainer="BD_waterfallsEntities">
+          <EntitySetMapping Name="Animals">
+            <EntityTypeMapping TypeName="BD_waterfallsModel.Animals">
+              <MappingFragment StoreEntitySet="Animals">
+                <ScalarProperty Name="AN_ID" ColumnName="AN_ID" />
+                <ScalarProperty Name="AN_NAME" ColumnName="AN_NAME" />
+                <ScalarProperty Name="AN_PHOTO" ColumnName="AN_PHOTO" />
+                <ScalarProperty Name="AN_HEIGHT" ColumnName="AN_HEIGHT" />
+                <ScalarProperty Name="AN_WEIGHT" ColumnName="AN_WEIGHT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="BD_waterfallsModel.Countries">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="CN_ID" ColumnName="CN_ID" />
+                <ScalarProperty Name="CN_NAME" ColumnName="CN_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rivers">
+            <EntityTypeMapping TypeName="BD_waterfallsModel.Rivers">
+              <MappingFragment StoreEntitySet="Rivers">
+                <ScalarProperty Name="RV_ID" ColumnName="RV_ID" />
+                <ScalarProperty Name="RV_NAME" ColumnName="RV_NAME" />
+                <ScalarProperty Name="RV_COUNTRY_ID" ColumnName="RV_COUNTRY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Types">
+            <EntityTypeMapping TypeName="BD_waterfallsModel.Types">
+              <MappingFragment StoreEntitySet="Types">
+                <ScalarProperty Name="TP_ID" ColumnName="TP_ID" />
+                <ScalarProperty Name="TP_NAME" ColumnName="TP_NAME" />
+                <ScalarProperty Name="TP_DESCRIPTION" ColumnName="TP_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="BD_waterfallsModel.Visits">
+              <MappingFragment StoreEntitySet="Visits">
+                <ScalarProperty Name="VS_ID" ColumnName="VS_ID" />
+                <ScalarProperty Name="VS_ID_ANIMALS" ColumnName="VS_ID_ANIMALS" />
+                <ScalarProperty Name="VS_ID_WATERFALLS" ColumnName="VS_ID_WATERFALLS" />
+                <ScalarProperty Name="VS_DATE" ColumnName="VS_DATE" />
+                <ScalarProperty Name="VS_DESCRIPTION" ColumnName="VS_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Waterfalls">
+            <EntityTypeMapping TypeName="BD_waterfallsModel.Waterfalls">
+              <MappingFragment StoreEntitySet="Waterfalls">
+                <ScalarProperty Name="WF_ID" ColumnName="WF_ID" />
+                <ScalarProperty Name="WF_NAME" ColumnName="WF_NAME" />
+                <ScalarProperty Name="WF_HEIGHT" ColumnName="WF_HEIGHT" />
+                <ScalarProperty Name="WF__PHOTO" ColumnName="WF__PHOTO" />
+                <ScalarProperty Name="WF_RIVER_ID" ColumnName="WF_RIVER_ID" />
+                <ScalarProperty Name="WF_TYPE_ID" ColumnName="WF_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

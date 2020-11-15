@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BD_waterfallsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Animals">
+    <Key>
+      <PropertyRef Name="AN_ID" />
+    </Key>
+    <Property Name="AN_ID" Type="Int32" Nullable="false" />
+    <Property Name="AN_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AN_PHOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="AN_HEIGHT" Type="Double" />
+    <Property Name="AN_WEIGHT" Type="Double" />
+    <NavigationProperty Name="Visits" Relationship="Self.FK__Visits__VS__ID_A__2A4B4B5E" FromRole="Animals" ToRole="Visits" />
+  </EntityType>
+  <EntityType Name="Countries">
+    <Key>
+      <PropertyRef Name="CN_ID" />
+    </Key>
+    <Property Name="CN_ID" Type="Int32" Nullable="false" />
+    <Property Name="CN_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Rivers" Relationship="Self.FK__Rivers__RV__COUN__276EDEB3" FromRole="Countries" ToRole="Rivers" />
+  </EntityType>
+  <EntityType Name="Rivers">
+    <Key>
+      <PropertyRef Name="RV_ID" />
+    </Key>
+    <Property Name="RV_ID" Type="Int32" Nullable="false" />
+    <Property Name="RV_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RV_COUNTRY_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Countries" Relationship="Self.FK__Rivers__RV__COUN__276EDEB3" FromRole="Rivers" ToRole="Countries" />
+    <NavigationProperty Name="Waterfalls" Relationship="Self.FK__Waterfall__WF__R__286302EC" FromRole="Rivers" ToRole="Waterfalls" />
+  </EntityType>
+  <EntityType Name="Types">
+    <Key>
+      <PropertyRef Name="TP_ID" />
+    </Key>
+    <Property Name="TP_ID" Type="Int32" Nullable="false" />
+    <Property Name="TP_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TP_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Waterfalls" Relationship="Self.FK__Waterfall__WF__T__29572725" FromRole="Types" ToRole="Waterfalls" />
+  </EntityType>
+  <EntityType Name="Visits">
+    <Key>
+      <PropertyRef Name="VS_ID" />
+    </Key>
+    <Property Name="VS_ID" Type="Int32" Nullable="false" />
+    <Property Name="VS_ID_ANIMALS" Type="Int32" Nullable="false" />
+    <Property Name="VS_ID_WATERFALLS" Type="Int32" Nullable="false" />
+    <Property Name="VS_DATE" Type="DateTime" Precision="3" />
+    <Property Name="VS_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Animals" Relationship="Self.FK__Visits__VS__ID_A__2A4B4B5E" FromRole="Visits" ToRole="Animals" />
+    <NavigationProperty Name="Waterfalls" Relationship="Self.FK__Visits__VS__ID_W__2B3F6F97" FromRole="Visits" ToRole="Waterfalls" />
+  </EntityType>
+  <EntityType Name="Waterfalls">
+    <Key>
+      <PropertyRef Name="WF_ID" />
+    </Key>
+    <Property Name="WF_ID" Type="Int32" Nullable="false" />
+    <Property Name="WF_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WF_HEIGHT" Type="Int32" />
+    <Property Name="WF__PHOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="WF_RIVER_ID" Type="Int32" Nullable="false" />
+    <Property Name="WF_TYPE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Rivers" Relationship="Self.FK__Waterfall__WF__R__286302EC" FromRole="Waterfalls" ToRole="Rivers" />
+    <NavigationProperty Name="Types" Relationship="Self.FK__Waterfall__WF__T__29572725" FromRole="Waterfalls" ToRole="Types" />
+    <NavigationProperty Name="Visits" Relationship="Self.FK__Visits__VS__ID_W__2B3F6F97" FromRole="Waterfalls" ToRole="Visits" />
+  </EntityType>
+  <Association Name="FK__Visits__VS__ID_A__2A4B4B5E">
+    <End Role="Animals" Type="Self.Animals" Multiplicity="1" />
+    <End Role="Visits" Type="Self.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Animals">
+        <PropertyRef Name="AN_ID" />
+      </Principal>
+      <Dependent Role="Visits">
+        <PropertyRef Name="VS_ID_ANIMALS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rivers__RV__COUN__276EDEB3">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+    <End Role="Rivers" Type="Self.Rivers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="CN_ID" />
+      </Principal>
+      <Dependent Role="Rivers">
+        <PropertyRef Name="RV_COUNTRY_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Waterfall__WF__R__286302EC">
+    <End Role="Rivers" Type="Self.Rivers" Multiplicity="1" />
+    <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rivers">
+        <PropertyRef Name="RV_ID" />
+      </Principal>
+      <Dependent Role="Waterfalls">
+        <PropertyRef Name="WF_RIVER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Waterfall__WF__T__29572725">
+    <End Role="Types" Type="Self.Types" Multiplicity="1" />
+    <End Role="Waterfalls" Type="Self.Waterfalls" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Types">
+        <PropertyRef Name="TP_ID" />
+      </Principal>
+      <Dependent Role="Waterfalls">
+        <PropertyRef Name="WF_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Visits__VS__ID_W__2B3F6F97">
+    <End Type="Self.Waterfalls" Multiplicity="1" Role="Waterfalls" />
+    <End Type="Self.Visits" Multiplicity="*" Role="Visits" />
+    <ReferentialConstraint>
+      <Principal Role="Waterfalls">
+        <PropertyRef Name="WF_ID" />
+      </Principal>
+      <Dependent Role="Visits">
+        <PropertyRef Name="VS_ID_WATERFALLS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BD_waterfallsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Animals" EntityType="Self.Animals" />
+    <EntitySet Name="Countries" EntityType="Self.Countries" />
+    <EntitySet Name="Rivers" EntityType="Self.Rivers" />
+    <EntitySet Name="Types" EntityType="Self.Types" />
+    <EntitySet Name="Visits" EntityType="Self.Visits" />
+    <EntitySet Name="Waterfalls" EntityType="Self.Waterfalls" />
+    <AssociationSet Name="FK__Visits__VS__ID_A__2A4B4B5E" Association="Self.FK__Visits__VS__ID_A__2A4B4B5E">
+      <End Role="Animals" EntitySet="Animals" />
+      <End Role="Visits" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rivers__RV__COUN__276EDEB3" Association="Self.FK__Rivers__RV__COUN__276EDEB3">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Rivers" EntitySet="Rivers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Waterfall__WF__R__286302EC" Association="Self.FK__Waterfall__WF__R__286302EC">
+      <End Role="Rivers" EntitySet="Rivers" />
+      <End Role="Waterfalls" EntitySet="Waterfalls" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Waterfall__WF__T__29572725" Association="Self.FK__Waterfall__WF__T__29572725">
+      <End Role="Types" EntitySet="Types" />
+      <End Role="Waterfalls" EntitySet="Waterfalls" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Visits__VS__ID_W__2B3F6F97" Association="Self.FK__Visits__VS__ID_W__2B3F6F97">
+      <End EntitySet="Waterfalls" Role="Waterfalls" />
+      <End EntitySet="Visits" Role="Visits" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
